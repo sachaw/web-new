@@ -17,6 +17,11 @@
     "vite-plugin-solid": "^2.5.0"
   },
   "dependencies": {
+    "@kobalte/core": "^0.6.2",
+    "@kobalte/tailwindcss": "^0.4.2",
+    "@meshtastic/meshtasticjs": "2.0.20-5",
+    "@modular-forms/solid": "^0.10.0",
+    "idb": "^7.1.1",
     "lucide-solid": "^0.115.0",
     "solid-js": "^1.6.11"
   }

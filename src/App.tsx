@@ -1,5 +1,6 @@
 import type { Component } from 'solid-js';
 import { Dashboard } from './Components/Dashboard.jsx';
+import { Test } from './Test.jsx';
 
 export const App: Component = () => {
   const device = false;
@@ -15,7 +16,8 @@ export const App: Component = () => {
                     <PageRouter /> */}
                   </div>
                 ) : (
-                  <Dashboard />
+                  // <Dashboard />
+                  <Test />
                 )}
               </div>
             </div>

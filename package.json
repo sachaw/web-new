@@ -9,20 +9,25 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.54.0",
+    "@typescript-eslint/parser": "^5.54.0",
     "autoprefixer": "^10.4.13",
+    "eslint": "^8.35.0",
+    "eslint-plugin-solid": "^0.10.0",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.7",
     "typescript": "^4.9.5",
     "vite": "^4.1.4",
-    "vite-plugin-solid": "^2.5.0"
+    "vite-plugin-solid": "^2.6.1"
   },
   "dependencies": {
     "@kobalte/core": "^0.6.2",
     "@kobalte/tailwindcss": "^0.4.2",
     "@meshtastic/meshtasticjs": "2.0.20-5",
     "@modular-forms/solid": "^0.10.0",
+    "class-variance-authority": "^0.4.0",
     "idb": "^7.1.1",
-    "lucide-solid": "^0.115.0",
+    "lucide-solid": "^0.123.0",
     "solid-js": "^1.6.11"
   }
 }

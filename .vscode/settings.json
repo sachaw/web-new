@@ -2,5 +2,9 @@
   "editor.formatOnSave": true,
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
-  ]
+  ],
+  "editor.defaultFormatter": "rome.rome",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "rome.rome"
+  }
 }

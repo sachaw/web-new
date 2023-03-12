@@ -9,25 +9,31 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.54.0",
-    "@typescript-eslint/parser": "^5.54.0",
-    "autoprefixer": "^10.4.13",
-    "eslint": "^8.35.0",
-    "eslint-plugin-solid": "^0.10.0",
+    "@types/w3c-web-serial": "^1.0.3",
+    "@types/web-bluetooth": "^0.0.16",
+    "@typescript-eslint/eslint-plugin": "^5.54.1",
+    "@typescript-eslint/parser": "^5.54.1",
+    "autoprefixer": "^10.4.14",
     "postcss": "^8.4.21",
+    "rome": "^11.0.0",
     "tailwindcss": "^3.2.7",
+    "tailwindcss-accent": "^2.1.2",
     "typescript": "^4.9.5",
     "vite": "^4.1.4",
     "vite-plugin-solid": "^2.6.1"
   },
   "dependencies": {
-    "@kobalte/core": "^0.6.2",
-    "@kobalte/tailwindcss": "^0.4.2",
+    "@emeraldpay/hashicon": "^0.5.2",
+    "@kobalte/core": "^0.7.2",
+    "@kobalte/tailwindcss": "^0.5.0",
     "@meshtastic/meshtasticjs": "2.0.20-5",
     "@modular-forms/solid": "^0.10.0",
+    "class-validator": "^0.14.0",
     "class-variance-authority": "^0.4.0",
+    "clsx": "^1.2.1",
     "idb": "^7.1.1",
-    "lucide-solid": "^0.123.0",
-    "solid-js": "^1.6.11"
+    "lucide-solid": "^0.125.0",
+    "solid-js": "^1.6.13",
+    "tailwind-merge": "^1.10.0"
   }
 }

@@ -1,5 +1,4 @@
-// import { useAppStore } from "@app/core/stores/appStore.js";
-// import { Button } from "@components/UI/Button.js";
+import { Button } from "@ui/Button.jsx";
 import {
   PlusIcon,
   ListPlusIcon,
@@ -8,40 +7,66 @@ import {
   CalendarIcon,
   BluetoothIcon,
   UsbIcon,
-  NetworkIcon
+  NetworkIcon,
 } from "lucide-solid";
-// import { Subtle } from "@components/UI/Typography/Subtle.js";
-// import { H3 } from "@components/UI/Typography/H3.js";
-// import { useDeviceStore } from "@app/core/stores/deviceStore.js";
-// import { useMemo } from "react";
-// import { Separator } from "@components/UI/Seperator.js";
+import { Subtle } from "@ui/Typography/Subtle.js";
+import { H3 } from "@ui/Typography/H3.jsx";
+import { Separator } from "@ui/Separator.jsx";
+import { Show, createSignal } from "solid-js";
 
 export const Dashboard = () => {
-//   const { setConnectDialogOpen } = useAppStore();
-//   const { getDevices } = useDeviceStore();
+  interface Device {
+    id: number;
+    name: string;
+    hardware: {
+      myNodeNum: number;
+    };
+    nodes: Map<
+      number,
+      {
+        user: {
+          longName: string;
+        };
+      }
+    >;
+    connection: {
+      connType: "ble" | "serial" | "http";
+    };
+  }
 
-//   const devices = useMemo(() => getDevices(), [getDevices]);
-
-const devices = []
+  const devices: Device[] = [];
+  const [connectDialogOpen, setConnectDialogOpen] = createSignal(false);
 
   return (
     <div class="flex flex-col gap-3 p-3">
       <div class="flex items-center justify-between">
         <div class="space-y-1">
-          {/* <H3>Connected Devices</H3>
-          <Subtle>Manage, connect and disconnect devices</Subtle> */}
+          <H3>Connected Devices</H3>
+          <Subtle>Manage, connect and disconnect devices</Subtle>
         </div>
       </div>
 
-      {/* <Separator /> */}
+      <Separator orientation="horizontal" />
 
       <div class="flex h-[450px] rounded-md border border-dashed border-slate-200 p-3 dark:border-slate-700">
-        {devices.length ? (
+        <Show
+          when={devices.length}
+          fallback={
+            <div class="m-auto flex flex-col gap-3 text-center">
+              <ListPlusIcon size={48} class="mx-auto text-textSecondary" />
+              <H3>No Devices</H3>
+              <Subtle>Connect atleast one device to get started</Subtle>
+              <Button class="gap-2" onClick={() => setConnectDialogOpen(true)}>
+                <PlusIcon size={16} />
+                New Connection
+              </Button>
+            </div>
+          }
+        >
           <ul role="list" class="grow divide-y divide-gray-200">
-            {devices.map((device, index) => {
+            {devices.map((device) => {
               return (
                 <li>
-                 {/* <li key={device.id}>
                   <div class="px-4 py-4 sm:px-6">
                     <div class="flex items-center justify-between">
                       <p class="truncate text-sm font-medium text-accent">
@@ -79,25 +104,12 @@ const devices = []
                         {device.nodes.size === 0 ? 0 : device.nodes.size - 1}
                       </div>
                     </div>
-                  </div> */}
+                  </div>
                 </li>
               );
             })}
           </ul>
-        ) : (
-          <div class="m-auto flex flex-col gap-3 text-center">
-            <ListPlusIcon size={48} class="mx-auto text-textSecondary" />
-            {/* <H3>No Devices</H3>
-            <Subtle>Connect atleast one device to get started</Subtle>
-            <Button
-              class="gap-2"
-              onClick={() => setConnectDialogOpen(true)}
-            >
-              <PlusIcon size={16} />
-              New Connection
-            </Button> */}
-          </div>
-        )}
+        </Show>
       </div>
     </div>
   );

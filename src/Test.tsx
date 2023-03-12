@@ -1,6 +1,7 @@
 import { Component } from "solid-js";
 import { ISerialConnection } from "@meshtastic/meshtasticjs";
 import {openDB} from "idb"
+import { useConnectionStore } from "@core/Data/ConnectionProvider.jsx";
 
 const db = await openDB("meshtastic", 1, {
   upgrade(db, oldVersion, newVersion, transaction, event) {
@@ -22,6 +23,9 @@ const db = await openDB("meshtastic", 1, {
 });
 
 export const Test: Component = () => {
+
+  const [state, {addConnection, removeConnection}] = useConnectionStore()
+
   const connection = new ISerialConnection();
 
 
@@ -29,12 +33,17 @@ export const Test: Component = () => {
     console.log("Node Info", nodeInfo);
   });
 
+  console.log(state)
+
   return (
     <div>
       <button
         onClick={() =>
           connection.connect({
             concurrentLogOutput: false,
+          }).then(() => {
+            addConnection(0, connection)
+          
           })
         }
       >

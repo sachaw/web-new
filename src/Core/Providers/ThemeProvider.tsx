@@ -2,7 +2,9 @@ import {
   Accessor,
   Component,
   JSX,
+  Setter,
   createContext,
+  createEffect,
   createSignal,
   useContext,
 } from "solid-js";
@@ -14,19 +16,14 @@ export interface ThemeProviderProps {
   children: JSX.Element;
 }
 
-export type ThemeState = [
-  theme: Accessor<Theme> | Theme,
-  setTheme: (theme: Theme) => void,
-  accent: Accessor<Accent> | Accent,
-  setAccent: (accent: Accent) => void,
+export type ThemeContextProps = [
+  theme: Accessor<Theme>,
+  setTheme: Setter<Theme>,
+  accent: Accessor<Accent>,
+  setAccent: Setter<Accent>,
 ];
 
-const ThemeContext = createContext<ThemeState>([
-  "system",
-  (theme: Theme) => {},
-  "blue",
-  (accent: Accent) => {},
-]);
+const ThemeContext = createContext<ThemeContextProps>();
 
 export const ThemeProvider: Component<ThemeProviderProps> = (props) => {
   //Keep system theme in sync with OS
@@ -36,7 +33,6 @@ export const ThemeProvider: Component<ThemeProviderProps> = (props) => {
   );
   mediaQuery.addEventListener("change", (e) => {
     setSystemPreference(e.matches ? "dark" : "light");
-    console.log("update systemColorScheme");
   });
 
   const [accent, setAccent] = createSignal<Accent>("blue");
@@ -47,18 +43,12 @@ export const ThemeProvider: Component<ThemeProviderProps> = (props) => {
   const theme =
     themeOverride() === "system" ? systemColorScheme : themeOverride;
 
+  createEffect(() => {
+    localStorage.setItem("theme", theme());
+  });
+
   return (
-    <ThemeContext.Provider
-      value={[
-        theme,
-        (theme: Theme) => {
-          localStorage.setItem("theme", theme);
-          setThemeOverride(theme);
-        },
-        accent,
-        (accent: Accent) => setAccent(accent),
-      ]}
-    >
+    <ThemeContext.Provider value={[theme, setThemeOverride, accent, setAccent]}>
       <div data-theme={theme()} data-accent={accent()}>
         {props.children}
       </div>
@@ -66,4 +56,4 @@ export const ThemeProvider: Component<ThemeProviderProps> = (props) => {
   );
 };
 
-export const useTheme = () => useContext(ThemeContext);
+export const useTheme = () => useContext(ThemeContext)!;

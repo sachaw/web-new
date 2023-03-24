@@ -14,12 +14,12 @@ import { Component, Show, createSignal } from "solid-js";
 import { DeviceSelectorButton } from "@components/Layout/DeviceSelector/DeviceSelectorButton.jsx";
 import { Code } from "@ui/Typography/Code.jsx";
 import { useTheme } from "@core/Providers/ThemeProvider.jsx";
+import { useDialog } from "@core/Providers/DialogProvider.jsx";
 
 export const DeviceSelector: Component = () => {
   const [selectedDevice, setSelectedDevice] = createSignal(0);
-  const [connectDialogOpen, setConnectDialogOpen] = createSignal(false);
   const [commandPaletteOpen, setCommandPaletteOpen] = createSignal(false);
-
+  const { setDialog } = useDialog();
   const [theme, setTheme] = useTheme();
 
   const getDevices = () => {
@@ -77,7 +77,7 @@ export const DeviceSelector: Component = () => {
           ))}
           <Separator orientation="horizontal" />
           <button
-            onClick={() => setConnectDialogOpen(true)}
+            onClick={() => setDialog("newDevice", true)}
             class="transition-all duration-300 hover:text-accent"
           >
             <PlusIcon />
@@ -105,7 +105,7 @@ export const DeviceSelector: Component = () => {
           <LanguagesIcon />
         </button>
         <Separator orientation="horizontal" />
-        {/* <Code>{process.env.COMMIT_HASH}</Code> */}
+        <Code>{process.env.COMMIT_HASH}</Code>
       </div>
     </nav>
   );

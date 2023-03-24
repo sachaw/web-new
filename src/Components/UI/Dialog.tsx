@@ -4,6 +4,8 @@ import { X } from "lucide-solid";
 import { cn } from "@core/Utils/cn.js";
 import { Component, JSX } from "solid-js";
 
+export type DialogProps = DialogPrimitive.DialogRootProps;
+
 export const Dialog: Component<DialogPrimitive.DialogRootProps> = (props) => (
   <DialogPrimitive.Root {...props}>
     <DialogPrimitive.Portal>

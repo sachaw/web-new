@@ -39,7 +39,7 @@ export const PageLayout: Component<PageLayoutProps> = (props) => {
       <div
         class={cn(
           "flex h-full w-full flex-col overflow-y-auto",
-          !props.noPadding && "p-3"
+          !props.noPadding && "p-3",
         )}
       >
         {props.children}

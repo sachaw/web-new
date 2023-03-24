@@ -1,7 +1,12 @@
 import { BLE } from "@components/PageComponents/Connect/BLE.jsx";
 import { HTTP } from "@components/PageComponents/Connect/HTTP.jsx";
 import { Serial } from "@components/PageComponents/Connect/Serial.jsx";
-import { Dialog, DialogDescription, DialogTitle } from "@ui/Dialog.jsx";
+import {
+  Dialog,
+  DialogDescription,
+  DialogProps,
+  DialogTitle,
+} from "@ui/Dialog.jsx";
 import { Link } from "@ui/Link.jsx";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/Tabs.jsx";
 import { Subtle } from "@ui/Typography/Subtle.jsx";
@@ -12,16 +17,13 @@ const tabs = [
     label: "HTTP",
     element: HTTP,
     disabled: false,
-    disabledMessage: "Unsuported connection method",
   },
   {
     label: "Bluetooth",
     element: BLE,
     disabled: !navigator.bluetooth,
     disabledMessage:
-      "Web Bluetooth is currently only supported by Chromium-based browsers",
-    disabledLink:
-      "https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API#browser_compatibility",
+      "Web Bluetooth is currently only supported by Chromium-based browsers: https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API#browser_compatibility",
   },
   {
     label: "Serial",
@@ -32,12 +34,7 @@ const tabs = [
   },
 ];
 
-export interface NewDeviceProps {
-  isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
-}
-
-export const NewDeviceDialog: Component<NewDeviceProps> = (props) => (
+export const NewDeviceDialog: Component<DialogProps> = (props) => (
   <Dialog isOpen={props.isOpen} onOpenChange={props.onOpenChange}>
     <DialogTitle>Connect New Device</DialogTitle>
     <DialogDescription>Description</DialogDescription>

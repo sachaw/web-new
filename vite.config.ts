@@ -1,9 +1,18 @@
+import { execSync } from "child_process";
 import { defineConfig } from "vite";
 import { resolve } from "path";
 import solidPlugin from "vite-plugin-solid";
+import EnvironmentPlugin from "vite-plugin-environment";
+
+const hash = execSync("git rev-parse --short HEAD").toString().trim();
 
 export default defineConfig({
-  plugins: [solidPlugin()],
+  plugins: [
+    solidPlugin(),
+    EnvironmentPlugin({
+      COMMIT_HASH: hash,
+    }),
+  ],
   server: {
     port: 3000,
   },

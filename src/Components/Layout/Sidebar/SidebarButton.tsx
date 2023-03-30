@@ -16,7 +16,7 @@ export interface SidebarButtonProps {
 export const SidebarButton: Component<SidebarButtonProps> = (props) => (
   <Button
     onClick={props.onClick}
-    variant={props.active ? "subtle" : "ghost"}
+    variant={props.active ? "default" : "ghost"}
     size="sm"
     class="w-full justify-start gap-2"
   >

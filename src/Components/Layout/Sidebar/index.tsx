@@ -12,12 +12,14 @@ import { Component, JSX, createSignal } from "solid-js";
 import { SidebarSection } from "@components/Layout/Sidebar/SidebarSection.jsx";
 import { SidebarButton } from "@components/Layout/Sidebar//SidebarButton.jsx";
 import { LucideIcon } from "src/types.js";
+import { useDialog } from "@core/Providers/DialogProvider.jsx";
 
 export interface SidebarProps {
   children?: JSX.Element;
 }
 
 export const Sidebar: Component<SidebarProps> = (props) => {
+  const { setDialog } = useDialog();
   type Page = "messages" | "map" | "config" | "channels" | "peers";
   const [activePage, setActivePage] = createSignal<Page>("messages");
   const myNode = {
@@ -72,7 +74,7 @@ export const Sidebar: Component<SidebarProps> = (props) => {
         </div>
         <button
           class="transition-all hover:text-accent"
-          //   onClick={() => setDialogOpen("deviceName", true)}
+          onClick={() => setDialog("deviceName", true)}
         >
           <EditIcon size={16} />
         </button>

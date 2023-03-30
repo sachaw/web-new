@@ -1,7 +1,8 @@
-const { fontFamily } = require("tailwindcss/defaultTheme");
+import type { Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme";
+import accent from "tailwindcss-accent";
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   darkMode: ["class", '[data-theme="dark"]'],
   content: ["./index.html", "./src/**/*.{ts,tsx}"],
   theme: {
@@ -24,13 +25,16 @@ module.exports = {
         press: "var(--brightnessPress)",
         disabled: "var(--brightnessDisabled)",
       },
+      boxShadow: {
+        highlight: "inset 0 1px 0 0 #ffffff0d, 0 -1px 0 0 #0000000d",
+      },
     },
   },
   plugins: [
-    require("tailwindcss-accent")({
+    accent({
       colors: ["violet", "blue"],
       root: "blue",
       cssVarsPrefix: "tw-plugin", // result: --tw-plugin-accent-200
     }),
   ],
-};
+} satisfies Config;

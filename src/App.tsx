@@ -8,7 +8,7 @@ import { DialogProvider } from "@core/Providers/DialogProvider.jsx";
 import { MapPage } from "./Pages/Map.jsx";
 
 export const App: Component = () => {
-  const page: "messages" | "map" | "config" | "channels" | "peers" = "map";
+  const page: "messages" | "map" | "config" | "channels" | "peers" = "messages";
   const device = true;
   return (
     <ConnectionProvider>
@@ -23,8 +23,8 @@ export const App: Component = () => {
                     {/*
                     <CommandPalette />
                     <PageRouter /> */}
-                    {/* {page === "messages" && <MessagesPage />} */}
-                    {page === "map" && <MapPage />}
+                    {page === "messages" && <MessagesPage />}
+                    {/* {page === "map" && <MapPage />} */}
                     {/* {page === "config" && <ConfigPage />}
                   {page === "channels" && <ChannelsPage />}
                   {page === "peers" && <PeersPage />} */}

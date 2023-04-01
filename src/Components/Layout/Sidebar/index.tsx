@@ -13,6 +13,7 @@ import { SidebarSection } from "@components/Layout/Sidebar/SidebarSection.jsx";
 import { SidebarButton } from "@components/Layout/Sidebar//SidebarButton.jsx";
 import { LucideIcon } from "src/types.js";
 import { useDialog } from "@core/Providers/DialogProvider.jsx";
+import { Page, useDevice } from "@core/Providers/DeviceProvider.jsx";
 
 export interface SidebarProps {
   children?: JSX.Element;
@@ -20,8 +21,8 @@ export interface SidebarProps {
 
 export const Sidebar: Component<SidebarProps> = (props) => {
   const { setDialog } = useDialog();
-  type Page = "messages" | "map" | "config" | "channels" | "peers";
-  const [activePage, setActivePage] = createSignal<Page>("messages");
+  const { UISetters, activeDevice } = useDevice();
+
   const myNode = {
     user: {
       shortName: "test",
@@ -64,7 +65,7 @@ export const Sidebar: Component<SidebarProps> = (props) => {
   ];
 
   return (
-    <div class="min-w-[280px] max-w-min flex-col border-r-[0.5px] border-slate-300 bg-transparent dark:border-slate-700">
+    <div class="min-w-[280px] max-w-min flex-col border-r-[0.5px] border-slate-300 bg-transparent dark:border-slate-700 dark:bg-slate-950">
       <div class="flex justify-between px-8 py-6">
         <div>
           <span class="text-lg font-medium">
@@ -73,7 +74,7 @@ export const Sidebar: Component<SidebarProps> = (props) => {
           <Subtle>{myNode?.user?.longName ?? "UNK"}</Subtle>
         </div>
         <button
-          class="transition-all hover:text-accent"
+          class="transition-all hover:text-accent-500"
           onClick={() => setDialog("deviceName", true)}
         >
           <EditIcon size={16} />
@@ -86,9 +87,9 @@ export const Sidebar: Component<SidebarProps> = (props) => {
             label={link.name}
             icon={link.icon}
             onClick={() => {
-              setActivePage(link.page);
+              UISetters.setActivePage(link.page);
             }}
-            active={link.page === activePage()}
+            active={activeDevice()?.UI.activePage === link.page}
           />
         ))}
       </SidebarSection>

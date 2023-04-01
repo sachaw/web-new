@@ -24,7 +24,7 @@ export const SidebarButton: Component<SidebarButtonProps> = (props) => (
     {props.children}
     {props.label}
     {!!props.badgeCount && (
-      <span class="ml-auto h-4 w-4 rounded-full bg-accentMuted text-xs text-textPrimary">
+      <span class="ml-auto h-4 w-4 rounded-full bg-accent-500 text-xs text-textPrimary">
         {props.badgeCount}
       </span>
     )}

@@ -1,40 +1,41 @@
+import { useConnection } from "@core/Providers/ConnectionProvider.jsx";
+import { useDialog } from "@core/Providers/DialogProvider.jsx";
 import { randId } from "@core/Utils/randId.js";
 import { ISerialConnection } from "@meshtastic/meshtasticjs";
 import { Button } from "@ui/Button.jsx";
 import { Mono } from "@ui/Typography/Mono.jsx";
-import { Component, createSignal } from "solid-js";
+import { Component, createEffect, createSignal } from "solid-js";
 
-export const Serial: Component = ()=> {
+export const Serial: Component = () => {
   const [serialPorts, setSerialPorts] = createSignal<SerialPort[]>([]);
-  // const { addDevice } = useDeviceStore();
-  // const { setSelectedDevice } = useAppStore();
+  const { addConnection } = useConnection();
+  const { setDialog } = useDialog();
 
   const updateSerialPortList = async () => {
     setSerialPorts(await navigator.serial.getPorts());
   };
 
   navigator.serial.addEventListener("connect", () => {
-    updateSerialPortList()
+    updateSerialPortList();
   });
-  navigator.serial.addEventListener("disconnect",() => {
-    updateSerialPortList()
+  navigator.serial.addEventListener("disconnect", () => {
+    updateSerialPortList();
   });
-  updateSerialPortList()
+  updateSerialPortList();
 
   const onConnect = async (port: SerialPort) => {
-    const id = randId();
-    // const device = addDevice(id);
-    // setSelectedDevice(id);
-    const connection = new ISerialConnection(id);
+    const connection = new ISerialConnection();
     await connection
       .connect({
         port,
         baudRate: undefined,
-        concurrentLogOutput: true
+        concurrentLogOutput: true,
+      })
+      .then(() => {
+        setDialog("newDevice", false);
       })
       .catch((e: Error) => console.log(`Unable to Connect: ${e.message}`));
-    // device.addConnection(connection);
-    // subscribeAll(device, connection);
+    addConnection(connection);
   };
 
   return (

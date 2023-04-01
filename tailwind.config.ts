@@ -14,11 +14,8 @@ export default {
       colors: {
         backgroundPrimary: "var(--backgroundPrimary)",
         backgroundSecondary: "var(--backgroundSecondary)",
-        accent: "var(--accent)",
-        accentMuted: "var(--accentMuted)",
         textPrimary: "var(--textPrimary)",
         textSecondary: "var(--textSecondary)",
-        link: "var(--link)",
       },
       brightness: {
         hover: "var(--brighnessHover)",
@@ -26,13 +23,14 @@ export default {
         disabled: "var(--brightnessDisabled)",
       },
       boxShadow: {
-        highlight: "inset 0 1px 0 0 #ffffff0d, 0 -1px 0 0 #0000000d",
+        highlight: "inset 0 1px 0 0 #ffffff0d, 0 2px 0 0 #ffffff0d",
+        inset: "inset 0 2px 0 0 #ffffff0d, 0 1px 0 0 #ffffff0d",
       },
     },
   },
   plugins: [
     accent({
-      colors: ["violet", "blue"],
+      colors: ["violet", "blue", "green", "yellow", "orange", "red"],
       root: "blue",
       cssVarsPrefix: "tw-plugin", // result: --tw-plugin-accent-200
     }),

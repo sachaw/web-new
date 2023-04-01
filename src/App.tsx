@@ -1,40 +1,46 @@
-import { Component, Show, createSignal } from "solid-js";
+import { Component, Match, Show, Switch, createSignal } from "solid-js";
 import { Dashboard } from "@components/Layout/Dashboard/Index.jsx";
 import { DeviceSelector } from "@components/Layout/DeviceSelector/index.jsx";
-import { ThemeProvider } from "@core/Providers/ThemeProvider.jsx";
 import { MessagesPage } from "./Pages/Messages.jsx";
-import { ConnectionProvider } from "@core/Providers/ConnectionProvider.jsx";
-import { DialogProvider } from "@core/Providers/DialogProvider.jsx";
-import { MapPage } from "./Pages/Map.jsx";
+import "maplibre-gl/dist/maplibre-gl.css";
+import { MapWrapper } from "./Pages/Map/MapWrapper.jsx";
+import { useDevice } from "@core/Providers/DeviceProvider.jsx";
+import { attachDevtoolsOverlay } from "@solid-devtools/overlay";
+import { ChannelsPage } from "./Pages/Channels/index.jsx";
+import { PeersPage } from "./Pages/Peers.jsx";
 
 export const App: Component = () => {
-  const page: "messages" | "map" | "config" | "channels" | "peers" = "messages";
-  const device = true;
+  const { activeDevice } = useDevice();
+  attachDevtoolsOverlay();
+
   return (
-    <ConnectionProvider>
-      <ThemeProvider>
-        <DialogProvider>
-          <div class="flex h-screen flex-col overflow-hidden bg-backgroundPrimary text-textPrimary">
-            <div class="flex flex-grow">
-              <DeviceSelector />
-              <div class="flex flex-grow flex-col">
-                <Show when={device} fallback={<Dashboard />}>
-                  <div class="flex h-screen">
-                    {/*
-                    <CommandPalette />
-                    <PageRouter /> */}
-                    {page === "messages" && <MessagesPage />}
-                    {/* {page === "map" && <MapPage />} */}
-                    {/* {page === "config" && <ConfigPage />}
-                  {page === "channels" && <ChannelsPage />}
-                  {page === "peers" && <PeersPage />} */}
-                  </div>
-                </Show>
-              </div>
+    <div class="flex h-screen flex-col overflow-hidden bg-slate-950 text-textPrimary">
+      <div class="flex flex-grow">
+        <DeviceSelector />
+        <div class="flex flex-grow flex-col bg-slate-900">
+          <Show when={activeDevice()} fallback={<Dashboard />}>
+            <div class="flex h-screen">
+              <Switch>
+                <Match when={activeDevice()?.UI.activePage === "messages"}>
+                  <MessagesPage />
+                </Match>
+                <Match when={activeDevice()?.UI.activePage === "map"}>
+                  <MapWrapper />
+                </Match>
+                <Match when={activeDevice()?.UI.activePage === "config"}>
+                  {/* <ConfigPage /> */}
+                </Match>
+                <Match when={activeDevice()?.UI.activePage === "channels"}>
+                  <ChannelsPage />
+                </Match>
+                <Match when={activeDevice()?.UI.activePage === "peers"}>
+                  <PeersPage />
+                </Match>
+              </Switch>
             </div>
-          </div>
-        </DialogProvider>
-      </ThemeProvider>
-    </ConnectionProvider>
+          </Show>
+        </div>
+      </div>
+    </div>
   );
 };

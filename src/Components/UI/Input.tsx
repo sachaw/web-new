@@ -6,7 +6,7 @@ export const Input: Component<JSX.InputHTMLAttributes<HTMLInputElement>> = (
 ) => (
   <input
     class={cn(
-      "flex h-10 w-full rounded-md bg-transparent dark:bg-slate-950 shadow-inner py-2 px-3 text-sm placeholder:text-slate-400 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:text-slate-50",
+      "shadow-inset flex h-10 w-full rounded-md bg-transparent dark:bg-slate-950 py-2 px-3 text-sm placeholder:text-slate-400 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:text-slate-50",
       props.class,
     )}
     {...props}

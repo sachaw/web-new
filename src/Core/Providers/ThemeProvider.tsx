@@ -10,7 +10,14 @@ import {
 } from "solid-js";
 
 type Theme = "light" | "dark" | "system";
-type Accent = "blue" | "red" | "green" | "yellow" | "purple" | "orange";
+type Accent =
+  | "blue"
+  | "red"
+  | "green"
+  | "yellow"
+  | "purple"
+  | "orange"
+  | "violet";
 
 export interface ThemeProviderProps {
   children: JSX.Element;
@@ -35,7 +42,7 @@ export const ThemeProvider: Component<ThemeProviderProps> = (props) => {
     setSystemPreference(e.matches ? "dark" : "light");
   });
 
-  const [accent, setAccent] = createSignal<Accent>("blue");
+  const [accent, setAccent] = createSignal<Accent>("violet");
   const [themeOverride, setThemeOverride] = createSignal(
     (localStorage.getItem("theme") as Theme) ?? "system",
   );
@@ -56,4 +63,4 @@ export const ThemeProvider: Component<ThemeProviderProps> = (props) => {
   );
 };
 
-export const useTheme = () => useContext(ThemeContext)!;
+export const useTheme = () => useContext(ThemeContext);

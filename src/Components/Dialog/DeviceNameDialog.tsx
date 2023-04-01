@@ -48,12 +48,15 @@ export const DeviceNameDialog: Component<DialogProps> = (props) => {
       <div class="gap-4">
         <form>
           <Label>Long Name</Label>
+          <Input />
           {/* <Input {...register("longName")} /> */}
           <Label>Short Name</Label>
+          <Input />
           {/* <Input maxLength={4} {...register("shortName")} /> */}
         </form>
       </div>
       <DialogFooter>
+        <Button>Save</Button>
         {/* <Button onClick={() => onSubmit()}>Save</Button> */}
       </DialogFooter>
     </Dialog>

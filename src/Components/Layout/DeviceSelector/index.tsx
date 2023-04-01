@@ -5,6 +5,9 @@ import {
   SunIcon,
   MoonIcon,
   TerminalIcon,
+  LoaderIcon,
+  Loader2,
+  Loader2Icon,
 } from "lucide-solid";
 // import { Code } from "@components/UI/Typography/Code.js";
 // import { DeviceSelectorButton } from "./DeviceSelectorButton.js";
@@ -15,70 +18,49 @@ import { DeviceSelectorButton } from "@components/Layout/DeviceSelector/DeviceSe
 import { Code } from "@ui/Typography/Code.jsx";
 import { useTheme } from "@core/Providers/ThemeProvider.jsx";
 import { useDialog } from "@core/Providers/DialogProvider.jsx";
+import { useDevice } from "@core/Providers/DeviceProvider.jsx";
+import { useConnection } from "@core/Providers/ConnectionProvider.jsx";
 
 export const DeviceSelector: Component = () => {
-  const [selectedDevice, setSelectedDevice] = createSignal(0);
   const [commandPaletteOpen, setCommandPaletteOpen] = createSignal(false);
   const { setDialog } = useDialog();
   const [theme, setTheme] = useTheme();
+  const { devices, activeDevice, setActiveDevice } = useDevice();
+  const { connections } = useConnection();
 
-  const getDevices = () => {
-    return [
-      {
-        id: 1,
-        name: "MyNode",
-        hardware: {
-          myNodeNum: 1,
-        },
-      },
-      {
-        id: 2,
-        name: "MyNode 2",
-        hardware: {
-          myNodeNum: 2,
-        },
-      },
-      {
-        id: 3,
-        name: "MyNode 3",
-        hardware: {
-          myNodeNum: 3,
-        },
-      },
-    ];
-  };
+  console.log(activeDevice());
 
   return (
     <nav class="flex flex-col justify-between border-r-[0.5px] border-slate-300 bg-transparent pt-2 dark:border-slate-700">
       <div class="flex flex-col overflow-y-hidden">
         <ul class="flex w-20 grow flex-col items-center space-y-4 bg-transparent py-4 px-5">
           <DeviceSelectorButton
-            active={selectedDevice() === 0}
+            active={!activeDevice()}
             onClick={() => {
-              setSelectedDevice(0);
+              setActiveDevice(undefined);
             }}
           >
             <HomeIcon />
           </DeviceSelectorButton>
-          {getDevices().map((device) => (
+          {connections.map((device) => (
             <DeviceSelectorButton
               onClick={() => {
-                setSelectedDevice(device.id);
+                setActiveDevice(device.nodeNum);
               }}
-              active={selectedDevice() === device.id}
+              active={activeDevice()?.nodeNum === device.nodeNum}
             >
-              <Hashicon
-                options={{
-                  size: 24,
-                }}
-                hash={device.hardware.myNodeNum}
-              />
+              <Show
+                when={device.nodeNum}
+                fallback={<Loader2Icon class="animate-spin" />}
+              >
+                <Hashicon hash={device.nodeNum} />
+              </Show>
             </DeviceSelectorButton>
           ))}
           <Separator orientation="horizontal" />
           <button
             onClick={() => setDialog("newDevice", true)}
-            class="transition-all duration-300 hover:text-accent"
+            class="transition-all duration-300 hover:text-accent-500"
           >
             <PlusIcon />
           </button>
@@ -86,7 +68,7 @@ export const DeviceSelector: Component = () => {
       </div>
       <div class="flex w-20 flex-col items-center space-y-5 bg-transparent px-5 pb-5">
         <button
-          class="transition-all hover:text-accent"
+          class="transition-all hover:text-accent-500"
           onClick={() =>
             theme() === "dark" ? setTheme("light") : setTheme("dark")
           }
@@ -96,12 +78,12 @@ export const DeviceSelector: Component = () => {
           </Show>
         </button>
         <button
-          class="transition-all hover:text-accent"
+          class="transition-all hover:text-accent-500"
           onClick={() => setCommandPaletteOpen(true)}
         >
           <TerminalIcon />
         </button>
-        <button class="transition-all hover:text-accent">
+        <button class="transition-all hover:text-accent-500">
           <LanguagesIcon />
         </button>
         <Separator orientation="horizontal" />

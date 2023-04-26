@@ -4,7 +4,7 @@ import { QRDialog } from "@components/Dialog/QRDialog.jsx";
 import { JSX, createContext, createSignal, useContext } from "solid-js";
 
 export interface DialogProviderProps {
-  children: JSX.Element;
+  children: JSXElement;
 }
 export type RegisteredDialogs = "newDevice" | "QRCode" | "deviceName";
 

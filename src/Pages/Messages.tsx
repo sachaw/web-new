@@ -1,12 +1,8 @@
 import { Hashicon } from "@components/Hashicon.jsx";
 import { PageLayout } from "@components/Layout/PageLayout/Index.jsx";
-import { SidebarButton } from "@components/Layout/Sidebar/SidebarButton.jsx";
-import { SidebarSection } from "@components/Layout/Sidebar/SidebarSection.jsx";
-import { Sidebar } from "@components/Layout/Sidebar/index.jsx";
 import { ChannelChat } from "@components/PageComponents/Messages/ChannelChat.jsx";
 import { useDevice } from "@core/Providers/DeviceProvider.jsx";
 import { Protobuf, Types } from "@meshtastic/meshtasticjs";
-import { HashIcon } from "lucide-solid";
 import { Component, createMemo, createSignal } from "solid-js";
 
 export const MessagesPage: Component = () => {
@@ -23,35 +19,20 @@ export const MessagesPage: Component = () => {
       ) ?? []
     );
   });
-  const nodes = createMemo(() => {
-    return activeDevice()?.nodes ?? [];
+
+  const filteredNodes = createMemo(() => {
+    return (
+      activeDevice()?.nodes.filter(
+        (node) => node.num !== activeDevice()?.nodeNum,
+      ) ?? []
+    );
   });
-
-  console.log(filteredChannels());
-
-  console.log(nodes());
 
   const messages = {
     broadcast: new Map(),
     direct: new Map(),
   };
-  const filteredNodes = [
-    {
-      num: 1,
-      user: {
-        shortName: "test",
-        longName: "test",
-      },
-    },
-  ];
-  const allChannels = [
-    {
-      index: 0,
-      settings: {
-        name: "Primary",
-      },
-    },
-  ];
+
   const currentChannel = 0;
   const getChannelName = (channel: Protobuf.Channel) => {
     return channel.settings?.name.length
@@ -61,62 +42,63 @@ export const MessagesPage: Component = () => {
       : `Ch ${channel.index}`;
   };
 
+  // <SidebarSection label="Channels">
+  //         {filteredChannels().map((channel) => (
+  //           <SidebarButton
+  //             label={
+  //               channel.settings?.name.length
+  //                 ? channel.settings?.name
+  //                 : channel.index === 0
+  //                 ? "Primary"
+  //                 : `Ch ${channel.index}`
+  //             }
+  //             active={activeChat() === channel.index}
+  //             // badgeCount={
+  //             //   messages.broadcast.get(channel.index)?.filter((m) => m.read)
+  //             //     .length
+  //             // }
+  //             onClick={() => {
+  //               setChatType("broadcast");
+  //               setActiveChat(channel.index);
+  //             }}
+  //           >
+  //             <HashIcon class="mr-2" />
+  //           </SidebarButton>
+  //         ))}
+  //       </SidebarSection>
+  //       <SidebarSection label="Peers">
+  //         {filteredNodes().map((node) => (
+  //           <SidebarButton
+  //             label={node.user?.longName ?? "Unknown"}
+  //             active={activeChat() === node.num}
+  //             // badgeCount={
+  //             //   messages.direct.get(node.num)?.filter((m) => m.read).length
+  //             // }
+  //             onClick={() => {
+  //               setChatType("direct");
+  //               setActiveChat(node.num);
+  //             }}
+  //           >
+  //             <Hashicon hash={node.num.toString()} options={{ size: 20 }} />
+  //           </SidebarButton>
+  //         ))}
+  //       </SidebarSection>
+
   return (
     <>
-      <Sidebar>
-        <SidebarSection label="Channels">
-          {filteredChannels().map((channel) => (
-            <SidebarButton
-              label={
-                channel.settings?.name.length
-                  ? channel.settings?.name
-                  : channel.index === 0
-                  ? "Primary"
-                  : `Ch ${channel.index}`
-              }
-              active={activeChat() === channel.index}
-              // badgeCount={
-              //   messages.broadcast.get(channel.index)?.filter((m) => m.read)
-              //     .length
-              // }
-              onClick={() => {
-                setChatType("broadcast");
-                setActiveChat(channel.index);
-              }}
-            >
-              <HashIcon class="mr-2" />
-            </SidebarButton>
-          ))}
-        </SidebarSection>
-        <SidebarSection label="Peers">
-          {/* {activeDevice()?.nodes.map((node) => (
-            <SidebarButton
-              label={node.user?.longName ?? "Unknown"}
-              active={activeChat() === node.num}
-              badgeCount={
-                messages.direct.get(node.num)?.filter((m) => m.read).length
-              }
-              onClick={() => {
-                setChatType("direct");
-                setActiveChat(node.num);
-              }}
-            >
-              <Hashicon hash={node.num.toString()} options={{ size: 20 }} />
-            </SidebarButton>
-          ))} */}
-        </SidebarSection>
-      </Sidebar>
       <PageLayout
-        label="tmp"
+        label="TMP"
         // label={`Messages: ${
         //   chatType() === "broadcast" && currentChannel
         //     ? getChannelName(currentChannel)
-        //     : chatType() === "direct" && nodes.get(activeChat)
-        //     ? nodes.get(activeChat)?.user?.longName ?? "Unknown"
+        //     : chatType() === "direct" &&
+        //       nodes().find((n) => n.num === activeChat())
+        //     ? nodes().find((n) => n.num === activeChat())?.user?.longName ??
+        //       "Unknown"
         //     : "Loading..."
         // }`}
       >
-        {allChannels.map(
+        {activeDevice()?.channels.map(
           (channel) =>
             activeChat() === channel.index && (
               <ChannelChat
@@ -126,7 +108,7 @@ export const MessagesPage: Component = () => {
               />
             ),
         )}
-        {filteredNodes.map(
+        {filteredNodes().map(
           (node) =>
             activeChat() === node.num && (
               <ChannelChat

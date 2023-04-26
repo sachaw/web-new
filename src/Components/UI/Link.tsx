@@ -1,9 +1,9 @@
 import { Link as LinkPrimitive } from "@kobalte/core";
-import { Component, JSX } from "solid-js";
+import { Component, JSXElement } from "solid-js";
 
 export interface LinkProps {
   href: string;
-  children: JSX.Element;
+  children: JSXElement;
 }
 
 export const Link: Component<LinkProps> = (props) => (

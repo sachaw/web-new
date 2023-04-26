@@ -1,7 +1,7 @@
-import { Component, JSX } from "solid-js";
+import { Component, JSXElement } from "solid-js";
 
 export interface CodeProps {
-  children: JSX.Element;
+  children: JSXElement;
 }
 
 export const Code: Component<CodeProps> = (props) => (

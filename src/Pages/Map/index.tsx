@@ -1,32 +1,13 @@
 import maplibre, { SourceSpecification, Viewport } from "maplibre-gl";
-import {
-  ZoomInIcon,
-  ZoomOutIcon,
-  BoxSelectIcon,
-  MapPinIcon,
-  EyeOffIcon,
-} from "lucide-solid";
 import { bbox, lineString } from "@turf/turf";
 // import MapGL, { Viewport } from "solid-map-gl";
 import { cn } from "@core/Utils/cn.js";
-import {
-  Component,
-  For,
-  createEffect,
-  createSignal,
-  createUniqueId,
-} from "solid-js";
-import { Sidebar } from "@components/Layout/Sidebar/index.jsx";
-import { SidebarSection } from "@components/Layout/Sidebar/SidebarSection.jsx";
-import { SidebarButton } from "@components/Layout/Sidebar/SidebarButton.jsx";
+import { Component, For, createEffect, createSignal } from "solid-js";
 import { PageLayout } from "@components/Layout/PageLayout/Index.jsx";
-import { Button } from "@ui/Button.jsx";
-import { FileAPISource, PMTiles, Protocol } from "pmtiles";
 import { Tmp } from "../Tmp.js";
-import { MapGL, useMap } from "@components/Map/MapGL.jsx";
+import { useMap } from "@components/Map/MapGL.jsx";
 import { ScaleControl } from "@components/Map/ScaleControl.jsx";
 import { Source } from "@components/Map/Source.jsx";
-import { Layer } from "@components/Map/Layer.jsx";
 
 export interface MapPageProps {
   mapContainer: HTMLDivElement;
@@ -108,53 +89,29 @@ export const MapPage: Component<MapPageProps> = (props) => {
   //     });
   //   }, [map, zoom]);
 
+  // <SidebarSection label="Sources">
+  //         {wmsSources().map((source, index) => (
+  //           <SidebarButton
+  //             active={true}
+  //             onClick={() => {
+  //               const state =
+  //                 map().getLayoutProperty(`wmsLayer-${index}`, "visibility") ===
+  //                 "visible";
+  //               map().setLayoutProperty(
+  //                 `wmsLayer-${index}`,
+  //                 "visibility",
+  //                 state ? "none" : "visible",
+  //               );
+  //             }}
+  //             label={source.type}
+  //             icon={EyeOffIcon}
+  //           />
+  //         ))}
+  //       </SidebarSection>
+
   return (
     <>
-      <Sidebar>
-        <SidebarSection label="Sources">
-          {wmsSources().map((source, index) => (
-            <SidebarButton
-              active={true}
-              onClick={() => {
-                const state =
-                  map().getLayoutProperty(`wmsLayer-${index}`, "visibility") ===
-                  "visible";
-                map().setLayoutProperty(
-                  `wmsLayer-${index}`,
-                  "visibility",
-                  state ? "none" : "visible",
-                );
-              }}
-              label={source.type}
-              icon={EyeOffIcon}
-            />
-          ))}
-        </SidebarSection>
-      </Sidebar>
-      <PageLayout
-        label="Map"
-        noPadding
-        actions={[
-          {
-            icon: ZoomInIcon,
-            onClick() {
-              map()?.zoomIn();
-            },
-          },
-          {
-            icon: ZoomOutIcon,
-            onClick() {
-              map()?.zoomOut();
-            },
-          },
-          {
-            icon: BoxSelectIcon,
-            onClick() {
-              //   getBBox();
-            },
-          },
-        ]}
-      >
+      <PageLayout label="Map" noPadding>
         <section>
           <Tmp />
           {props.mapContainer}

@@ -1,5 +1,4 @@
 import { useDevice } from "@core/Providers/DeviceProvider.jsx";
-import { Sidebar } from "lucide-solid";
 import {
   Component,
   For,
@@ -14,18 +13,27 @@ import {
   createSolidTable,
 } from "@tanstack/solid-table";
 import { Protobuf } from "@meshtastic/meshtasticjs";
+import { Sidebar } from "@components/Layout/Sidebar/index.jsx";
 
 type TableDataType = Omit<Protobuf.NodeInfo, keyof Protobuf.native.Message>;
 
 export const PeersPage: Component = () => {
   const { activeDevice } = useDevice();
 
+  const filteredNodes = createMemo(() => {
+    return (
+      activeDevice()?.nodes.filter(
+        (node) => node.num !== activeDevice()?.nodeNum,
+      ) ?? []
+    );
+  });
+
   const defaultColumns: ColumnDef<TableDataType>[] = [
     {
       accessorKey: "num",
       cell: (info) => info.getValue(),
-      footer: (info) => info.column.id,
     },
+
     // {
     //   accessorFn: row => row.lastName,
     //   id: 'lastName',
@@ -55,25 +63,10 @@ export const PeersPage: Component = () => {
     // },
   ];
 
-  const data = createMemo<TableDataType[]>(() => {
-    return (
-      activeDevice()?.nodes.map((node) => {
-        return {
-          channel: node.channel,
-          lastHeard: node.lastHeard,
-          num: node.num,
-          position: node.position,
-          snr: node.snr,
-          deviceMetrics: node.deviceMetrics,
-          user: node.user,
-        };
-      }) ?? []
-    );
-  });
-
   const table = createSolidTable({
     get data() {
-      return data();
+      // return data();
+      return filteredNodes();
       // return activeDevice()?.nodes ?? [];
     },
     columns: defaultColumns,
@@ -82,72 +75,47 @@ export const PeersPage: Component = () => {
 
   return (
     <>
-      <Sidebar />
-      <div class="w-full overflow-y-auto">
-        <div class="p-2">
-          <table>
-            <thead>
-              <For each={table.getHeaderGroups()}>
-                {(headerGroup) => (
-                  <tr>
-                    <For each={headerGroup.headers}>
-                      {(header) => (
-                        <th>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext(),
-                              )}
-                        </th>
-                      )}
-                    </For>
-                  </tr>
-                )}
-              </For>
-            </thead>
-            <tbody>
-              <For each={table.getRowModel().rows}>
-                {(row) => (
-                  <tr>
-                    <For each={row.getVisibleCells()}>
-                      {(cell) => (
-                        <td>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="border-b">
+          <For each={table.getHeaderGroups()}>
+            {(headerGroup) => (
+              <tr>
+                <For each={headerGroup.headers}>
+                  {(header) => (
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext(),
                           )}
-                        </td>
+                    </th>
+                  )}
+                </For>
+              </tr>
+            )}
+          </For>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <For each={table.getRowModel().rows}>
+            {(row) => (
+              <tr>
+                <For each={row.getVisibleCells()}>
+                  {(cell) => (
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
                       )}
-                    </For>
-                  </tr>
-                )}
-              </For>
-            </tbody>
-            <tfoot>
-              <For each={table.getFooterGroups()}>
-                {(footerGroup) => (
-                  <tr>
-                    <For each={footerGroup.headers}>
-                      {(header) => (
-                        <th>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.footer,
-                                header.getContext(),
-                              )}
-                        </th>
-                      )}
-                    </For>
-                  </tr>
-                )}
-              </For>
-            </tfoot>
-          </table>
-          <div class="h-4" />
-        </div>
-        {/* <Table
+                    </td>
+                  )}
+                </For>
+              </tr>
+            )}
+          </For>
+        </tbody>
+      </table>
+      {/* <Table
           headings={[
             { title: "", type: "blank", sortable: false },
             { title: "Name", type: "normal", sortable: true },
@@ -185,7 +153,6 @@ export const PeersPage: Component = () => {
             </Mono>
           ])}
         /> */}
-      </div>
     </>
   );
 };

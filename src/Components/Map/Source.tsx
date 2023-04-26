@@ -1,7 +1,7 @@
 import * as maplibre from "maplibre-gl";
 import {
   createContext,
-  JSX,
+  JSXElement,
   onCleanup,
   useContext,
   createUniqueId,
@@ -12,7 +12,7 @@ import { useMap, useMapEffect } from "./MapGL.jsx";
 export interface SourceProps {
   id?: string;
   source: maplibre.SourceSpecification;
-  children?: JSX.Element;
+  children?: JSXElement;
 }
 
 export const SourceIdContext = createContext<string | undefined>();

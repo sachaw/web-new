@@ -1,9 +1,9 @@
 import { cn } from "@core/Utils/cn.js";
-import { Component, JSX } from "solid-js";
+import { Component, JSXElement } from "solid-js";
 
 interface LabelProps {
   class?: string;
-  children?: JSX.Element;
+  children?: JSXElement;
 }
 
 export const Label: Component<LabelProps> = (props) => (

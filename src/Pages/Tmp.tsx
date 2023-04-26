@@ -113,6 +113,16 @@ export const Tmp: Component = () => {
                 "fill-color": "white",
               },
             },
+            {
+              id: `water-${file.name.split(".")[0]}`,
+              source: file.name.split(".")[0],
+              "source-layer": "water",
+              type: "fill",
+              paint: {
+                // "line-color": "red",
+                "fill-color": "red",
+              },
+            },
           ],
         });
       });

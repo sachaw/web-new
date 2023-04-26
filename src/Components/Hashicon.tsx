@@ -8,7 +8,7 @@ export interface HashiconProps {
 }
 
 export const Hashicon: Component<HashiconProps> = (params) => {
-  let hash =
+  const hash =
     typeof params.hash === "number" ? params.hash.toString() : params.hash;
   const icon = hashicon(hash, params.options);
 

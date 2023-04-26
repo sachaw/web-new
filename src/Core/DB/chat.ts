@@ -14,6 +14,11 @@ export enum MessageStatus {
   FAILED,
 }
 
+export enum MessageScope {
+  DIRECT,
+  BROADCAST,
+}
+
 export interface ChatSchema extends DBSchema {
   chats: {
     key: string;
@@ -22,6 +27,7 @@ export interface ChatSchema extends DBSchema {
       nodeNum: string;
       message: string;
       type: MessageType;
+      scope: MessageScope;
       status: MessageStatus;
       channel: Types.ChannelNumber;
     };

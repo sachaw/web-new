@@ -11,15 +11,16 @@ import {
 } from "solid-js";
 import { createStore } from "solid-js/store";
 import { useDevice } from "./DeviceProvider.jsx";
+import { MessageScope, MessageStatus, MessageType } from "@core/DB/chat.js";
 
 export interface ConnectionProviderProps {
-  children: JSX.Element;
+  children: JSXElement;
 }
 
 export interface ConnectionContextProps {
   connections: ConnectionState[];
   addConnection: (connection: Types.ConnectionType) => void;
-  getActiveConnection: (nodeNum: number) => ConnectionState | undefined;
+  getActiveConnection: () => ConnectionState | undefined;
 }
 
 interface ConnectionState {
@@ -95,6 +96,25 @@ export const ConnectionProvider: Component<ConnectionProviderProps> = (
               positionPacket.from,
               positionPacket.data,
             );
+          },
+        );
+
+        connection.connection.events.onMessagePacket.subscribe(
+          (messagePacket) => {
+            deviceSetters.setMessage({
+              from: messagePacket.from,
+              to: messagePacket.to,
+              id: messagePacket.id,
+              timestamp: messagePacket.rxTime,
+              scope:
+                messagePacket.to === 0xffffffff
+                  ? MessageScope.BROADCAST
+                  : MessageScope.DIRECT,
+              channel: messagePacket.channel,
+              status: MessageStatus.FAILED,
+              type: MessageType.TEXT,
+              text: messagePacket.data,
+            });
           },
         );
       }

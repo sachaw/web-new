@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
-import { fontFamily } from "tailwindcss/defaultTheme";
+import { fontFamily } from "tailwindcss/defaultTheme.js";
 import accent from "tailwindcss-accent";
+import kobalte from "@kobalte/tailwindcss";
 
 export default {
   darkMode: ["class", '[data-theme="dark"]'],
@@ -11,17 +12,6 @@ export default {
         mono: ["Cascadia Code", ...fontFamily.mono],
         sans: ["Inter var", ...fontFamily.sans],
       },
-      colors: {
-        backgroundPrimary: "var(--backgroundPrimary)",
-        backgroundSecondary: "var(--backgroundSecondary)",
-        textPrimary: "var(--textPrimary)",
-        textSecondary: "var(--textSecondary)",
-      },
-      brightness: {
-        hover: "var(--brighnessHover)",
-        press: "var(--brightnessPress)",
-        disabled: "var(--brightnessDisabled)",
-      },
       boxShadow: {
         highlight: "inset 0 1px 0 0 #ffffff0d, 0 2px 0 0 #ffffff0d",
         inset: "inset 0 2px 0 0 #ffffff0d, 0 1px 0 0 #ffffff0d",
@@ -29,6 +19,7 @@ export default {
     },
   },
   plugins: [
+    kobalte({}),
     accent({
       colors: ["violet", "blue", "green", "yellow", "orange", "red"],
       root: "blue",

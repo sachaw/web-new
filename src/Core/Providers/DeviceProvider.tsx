@@ -1,3 +1,4 @@
+import { MessageScope, MessageStatus, MessageType } from "@core/DB/chat.js";
 import { Protobuf, Types } from "@meshtastic/meshtasticjs";
 import {
   Accessor,
@@ -12,7 +13,7 @@ import {
 import { createStore } from "solid-js/store";
 
 export interface ConnectionProviderProps {
-  children: JSX.Element;
+  children: JSXElement;
 }
 
 export interface DeviceContextProps {
@@ -28,6 +29,7 @@ export interface DeviceContextProps {
       from: number,
       positions: Protobuf.Position,
     ) => void;
+    setMessage: (message: TextMessage | LocationMessage) => void;
   };
   activeDevice: () => DeviceState | undefined;
   addDevice: (nodeNum: number) => void;
@@ -37,6 +39,26 @@ export interface DeviceContextProps {
   };
 }
 
+export interface Message {
+  from: number;
+  to: number;
+  id: number;
+  timestamp: Date;
+  scope: MessageScope;
+  channel: Types.ChannelNumber;
+  status: MessageStatus;
+}
+
+interface TextMessage extends Message {
+  type: MessageType.TEXT;
+  text: string;
+}
+
+interface LocationMessage extends Message {
+  type: MessageType.LOCATION;
+  position: Protobuf.Position;
+}
+
 export interface DeviceState {
   nodeNum: number;
   myNodeInfo: Protobuf.MyNodeInfo;
@@ -44,10 +66,11 @@ export interface DeviceState {
   channels: Protobuf.Channel[];
   config: Protobuf.Config;
   moduleConfig: Protobuf.ModuleConfig;
+  messages: (TextMessage | LocationMessage)[];
   UI: DeviceUIState;
 }
 
-export type Page = "messages" | "map" | "config" | "channels" | "peers";
+export type Page = "messages" | "config" | "channels" | "peers";
 
 export interface DeviceUIState {
   activePage: Page;
@@ -72,6 +95,7 @@ export const DeviceProvider: Component<ConnectionProviderProps> = (props) => {
         channels: [],
         config: new Protobuf.Config(),
         moduleConfig: new Protobuf.ModuleConfig(),
+        messages: [],
         UI: {
           activePage: "messages",
         },
@@ -128,6 +152,17 @@ export const DeviceProvider: Component<ConnectionProviderProps> = (props) => {
         (node) => node.num === from,
         "position",
         position,
+      );
+    },
+    setMessage: (message: TextMessage | LocationMessage) => {
+      const deviceIndex = devices.findIndex(
+        (device) => device.nodeNum === activeDeviceNum(),
+      );
+      setDevices(
+        (device) => device.nodeNum === message.to,
+        "messages",
+        devices[deviceIndex].messages.length,
+        message,
       );
     },
   };

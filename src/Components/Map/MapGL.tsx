@@ -27,7 +27,7 @@ export type MapGLProps = {
   style?: JSX.CSSProperties;
   cursor?: string;
   options?: Partial<Omit<MapOptions, "container">>;
-  children: (container: HTMLDivElement) => JSX.Element;
+  children: (container: HTMLDivElement) => JSXElement;
 } & MapEvents;
 
 type MapEvents = Partial<{

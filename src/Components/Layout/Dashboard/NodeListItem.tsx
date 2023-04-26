@@ -3,12 +3,11 @@ import { useConnection } from "@core/Providers/ConnectionProvider.jsx";
 import { DeviceState } from "@core/Providers/DeviceProvider.jsx";
 import {
   BluetoothIcon,
-  ChevronRightIcon,
-  HashIcon,
-  NetworkIcon,
   UsbIcon,
+  WifiHighIcon,
+  CaretRightIcon,
   UsersIcon,
-} from "lucide-solid";
+} from "solid-phosphor/regular";
 import { base16 } from "rfc4648";
 import { Component, Match, Switch, createMemo } from "solid-js";
 
@@ -54,19 +53,19 @@ export const NodeListItem: Component<NodeListItemProps> = (props) => {
             <Switch>
               <Match when={connection()?.connection?.connType === "ble"}>
                 <>
-                  <BluetoothIcon size={16} />
+                  <BluetoothIcon class="p-1" />
                   <span class="m-auto">BLE</span>
                 </>
               </Match>
               <Match when={connection()?.connection?.connType === "serial"}>
                 <>
-                  <UsbIcon class="m-auto" size={16} />
+                  <UsbIcon class="p-1" />
                   <span class="m-auto">Serial</span>
                 </>
               </Match>
               <Match when={connection()?.connection?.connType === "http"}>
                 <>
-                  <NetworkIcon size={16} />
+                  <WifiHighIcon class="p-1" />
                   <span class="m-auto">Network</span>
                 </>
               </Match>
@@ -81,7 +80,7 @@ export const NodeListItem: Component<NodeListItemProps> = (props) => {
         </div>
       </div>
       <div class="my-auto ml-auto">
-        <ChevronRightIcon class="text-slate-500" />
+        <CaretRightIcon class="text-slate-500" />
       </div>
     </div>
   );

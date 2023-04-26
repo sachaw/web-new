@@ -1,7 +1,7 @@
 import {
   Accessor,
   Component,
-  JSX,
+  JSXElement,
   Setter,
   createContext,
   createEffect,
@@ -20,15 +20,15 @@ type Accent =
   | "violet";
 
 export interface ThemeProviderProps {
-  children: JSX.Element;
+  children: JSXElement;
 }
 
-export type ThemeContextProps = [
-  theme: Accessor<Theme>,
-  setTheme: Setter<Theme>,
-  accent: Accessor<Accent>,
-  setAccent: Setter<Accent>,
-];
+export interface ThemeContextProps {
+  theme: Accessor<Theme>;
+  setTheme: Setter<Theme>;
+  accent: Accessor<Accent>;
+  setAccent: Setter<Accent>;
+}
 
 const ThemeContext = createContext<ThemeContextProps>();
 
@@ -55,7 +55,14 @@ export const ThemeProvider: Component<ThemeProviderProps> = (props) => {
   });
 
   return (
-    <ThemeContext.Provider value={[theme, setThemeOverride, accent, setAccent]}>
+    <ThemeContext.Provider
+      value={{
+        theme,
+        setTheme: setThemeOverride,
+        accent,
+        setAccent,
+      }}
+    >
       <div data-theme={theme()} data-accent={accent()}>
         {props.children}
       </div>
@@ -63,4 +70,4 @@ export const ThemeProvider: Component<ThemeProviderProps> = (props) => {
   );
 };
 
-export const useTheme = () => useContext(ThemeContext);
+export const useTheme = () => useContext(ThemeContext)!;

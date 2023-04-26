@@ -1,6 +1,6 @@
 import type { Protobuf, Types } from "@meshtastic/meshtasticjs";
 import { Subtle } from "@ui/Typography/Subtle.jsx";
-import { InboxIcon } from "lucide-solid";
+import { TrayIcon } from "solid-phosphor/regular";
 import { Component } from "solid-js";
 import { Message } from "./Message.jsx";
 import { MessageInput } from "./MessageInput.jsx";
@@ -18,10 +18,7 @@ export interface MessageWithState extends Types.PacketMetadata<string> {
 
 export type MessageState = "ack" | "waiting" | Protobuf.Routing_Error;
 
-
 export const ChannelChat: Component<ChannelChatProps> = (props) => {
-
-
   const nodes = new Map<number, Protobuf.NodeInfo>();
 
   return (
@@ -32,14 +29,16 @@ export const ChannelChat: Component<ChannelChatProps> = (props) => {
             <Message
               message={message}
               lastMsgSameUser={
-                index === 0 ? false : props.messages[index - 1].from === message.from
+                index === 0
+                  ? false
+                  : props.messages[index - 1].from === message.from
               }
               sender={nodes.get(message.from)}
             />
           ))
         ) : (
           <div class="m-auto">
-            <InboxIcon class="m-auto" />
+            <TrayIcon class="m-auto" />
             <Subtle>No Messages</Subtle>
           </div>
         )}

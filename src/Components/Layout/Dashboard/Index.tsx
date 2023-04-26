@@ -1,23 +1,13 @@
 import { Button } from "@ui/Button.jsx";
-import {
-  PlusIcon,
-  ListPlusIcon,
-  UsersIcon,
-  MapPinIcon,
-  CalendarIcon,
-  BluetoothIcon,
-  UsbIcon,
-  NetworkIcon,
-} from "lucide-solid";
+import { PlusIcon, ListPlusIcon } from "solid-phosphor/regular";
 import { Subtle } from "@ui/Typography/Subtle.js";
 import { H3 } from "@ui/Typography/H3.jsx";
-import { For, Show, createMemo } from "solid-js";
+import { For, Show } from "solid-js";
 import { useDialog } from "@core/Providers/DialogProvider.jsx";
 import { Input } from "@ui/Input.jsx";
 import { useConnection } from "@core/Providers/ConnectionProvider.jsx";
 import { useDevice } from "@core/Providers/DeviceProvider.jsx";
 import { NodeListItem } from "./NodeListItem.jsx";
-import { Separator } from "@ui/Separator.jsx";
 
 export const Dashboard = () => {
   const { setDialog } = useDialog();
@@ -38,7 +28,7 @@ export const Dashboard = () => {
                 </div>
               </div>
               <div class="m-auto flex flex-col gap-3 text-center">
-                <ListPlusIcon size={48} class="mx-auto text-textSecondary" />
+                <ListPlusIcon class="mx-auto text-gray-400 h-16 w-16" />
                 <H3>No Devices</H3>
                 <Subtle>Connect atleast one device to get started</Subtle>
                 <Input />
@@ -46,7 +36,7 @@ export const Dashboard = () => {
                   class="gap-2"
                   onClick={() => setDialog("newDevice", true)}
                 >
-                  <PlusIcon size={16} />
+                  <PlusIcon />
                   New Connection
                 </Button>
               </div>

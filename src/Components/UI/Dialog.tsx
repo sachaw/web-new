@@ -1,8 +1,8 @@
 import { Dialog as DialogPrimitive } from "@kobalte/core";
-import { X } from "lucide-solid";
+import { XIcon } from "solid-phosphor/regular";
 
 import { cn } from "@core/Utils/cn.js";
-import { Component, JSX } from "solid-js";
+import { Component, JSXElement } from "solid-js";
 import { ThemeProvider } from "@core/Providers/ThemeProvider.jsx";
 
 export type DialogProps = DialogPrimitive.DialogRootProps;
@@ -24,7 +24,7 @@ export const Dialog: Component<DialogPrimitive.DialogRootProps> = (props) => (
             )}
           >
             <DialogPrimitive.CloseButton class="absolute top-4 right-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-slate-100 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 dark:data-[state=open]:bg-slate-800">
-              <X class="h-4 w-4" />
+              <XIcon class="h-4 w-4" />
               <span class="sr-only">Close</span>
             </DialogPrimitive.CloseButton>
             {props.children}
@@ -60,7 +60,7 @@ export const DialogTitle: Component<DialogPrimitive.DialogTitleProps> = (
 
 export interface DialogFooterProps {
   class?: string;
-  children: JSX.Element;
+  children: JSXElement;
 }
 
 export const DialogFooter: Component<DialogFooterProps> = (props) => (

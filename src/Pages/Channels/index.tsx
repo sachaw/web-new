@@ -1,12 +1,12 @@
 import { PageLayout } from "@components/Layout/PageLayout/Index.jsx";
-import { Sidebar } from "@components/Layout/Sidebar/index.jsx";
 import { useDevice } from "@core/Providers/DeviceProvider.jsx";
 import { useDialog } from "@core/Providers/DialogProvider.jsx";
 import { Protobuf, Types } from "@meshtastic/meshtasticjs";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ui/Tabs.jsx";
-import { ImportIcon, QrCodeIcon } from "lucide-solid";
-import { Component, createSignal } from "solid-js";
+import { DownloadSimpleIcon, QrCodeIcon } from "solid-phosphor/regular";
+import { Component, Show, createSignal } from "solid-js";
 import { Channel } from "./Channel.jsx";
+import { Select } from "@ui/Select.jsx";
 
 export const getChannelName = (channel: Protobuf.Channel) =>
   channel.settings?.name.length
@@ -26,14 +26,24 @@ export const ChannelsPage: Component = () => {
 
   return (
     <>
-      <Sidebar />
       <PageLayout
-        label={`Channel: ${
-          currentChannel ? getChannelName(currentChannel) : "Loading..."
-        }`}
+        label="Channel:"
+        labelElement={
+          <Select
+            value={activeChannel().toString()}
+            options={
+              activeDevice()?.channels.map((channel) => ({
+                label: getChannelName(channel),
+                value: channel.index.toString(),
+                disabled: false,
+              })) || []
+            }
+            placeholder="Loading..."
+          />
+        }
         actions={[
           {
-            icon: ImportIcon,
+            icon: DownloadSimpleIcon,
             onClick() {
               // setDialog("import", true);
             },
@@ -46,20 +56,16 @@ export const ChannelsPage: Component = () => {
           },
         ]}
       >
-        <Tabs defaultValue="0">
-          <TabsList>
-            {activeDevice()?.channels.map((channel) => (
-              <TabsTrigger value={channel.index.toString()}>
-                {getChannelName(channel)}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-          {activeDevice()?.channels.map((channel) => (
-            <TabsContent value={channel.index.toString()}>
-              <Channel channel={channel} />
-            </TabsContent>
-          ))}
-        </Tabs>
+        <Show
+          when={currentChannel}
+          fallback={
+            <div class="flex flex-col items-center justify-center h-full">
+              <p class="text-xl text-center">No channel selected</p>
+            </div>
+          }
+        >
+          <Channel channel={currentChannel!} />
+        </Show>
       </PageLayout>
     </>
   );

@@ -1,5 +1,5 @@
 import { Checkbox as CheckboxPrimitive } from "@kobalte/core";
-import { CheckIcon } from "lucide-solid";
+import { CheckIcon } from "solid-phosphor/regular";
 
 import { cn } from "@core/Utils/cn.js";
 import { Component } from "solid-js";

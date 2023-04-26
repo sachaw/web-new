@@ -1,49 +1,37 @@
-import { cn } from "@core/Utils/cn.js";
-import { AlignLeftIcon } from "lucide-solid";
-import { Component, JSX } from "solid-js";
-import { LucideIcon } from "src/types.js";
+import { Component, JSXElement } from "solid-js";
+import type { PhosphorIcon } from "solid-phosphor";
 
 export interface PageLayoutProps {
   label: string;
+  labelElement?: JSXElement;
   noPadding?: boolean;
-  children: JSX.Element;
+  children: JSXElement;
   actions?: {
-    icon: LucideIcon;
+    icon: Component<PhosphorIcon>;
     onClick: () => void;
   }[];
 }
 
 export const PageLayout: Component<PageLayoutProps> = (props) => {
   return (
-    <div class="relative flex h-full w-full flex-col">
-      <div class="flex h-14 shrink-0 border-b-[0.5px] border-slate-300 dark:border-slate-700 md:h-16 md:px-4 dark:bg-slate-950">
-        <button class="pl-4 transition-all hover:text-accent-500 md:hidden">
-          <AlignLeftIcon />
-        </button>
-        <div class="flex flex-1 items-center justify-between px-4 md:px-0 ">
-          <div class="flex w-full items-center">
-            <span class="w-full text-lg font-medium">{props.label}</span>
-            <div class="flex justify-end space-x-4">
-              {props.actions?.map((action, index) => (
-                <button
-                  class="transition-all hover:text-accent-500"
-                  onClick={action.onClick}
-                >
-                  <action.icon />
-                </button>
-              ))}
-            </div>
-          </div>
+    <div class="relative flex h-full w-1/3 flex-col">
+      <div class="flex h-8">
+        <span class="flex tracking-tight font-mono gap-1">
+          {props.label}
+          {props.labelElement}
+        </span>
+        <div class="flex ml-auto">
+          {props.actions?.map((action, index) => (
+            <button
+              class="transition-all hover:text-accent-500 hover:bg-gray-900 px-2"
+              onClick={action.onClick}
+            >
+              <action.icon class="h-4 w-4" />
+            </button>
+          ))}
         </div>
       </div>
-      <div
-        class={cn(
-          "flex h-full w-full flex-col overflow-y-auto",
-          !props.noPadding && "p-3",
-        )}
-      >
-        {props.children}
-      </div>
+      <div class="flex grow overflow-y-auto">{props.children}</div>
     </div>
   );
 };

@@ -1,10 +1,10 @@
 import { cn } from "@core/Utils/cn.js";
-import { Component, JSX } from "solid-js";
+import { Component, JSXElement } from "solid-js";
 
 export interface DeviceSelectorButtonProps {
   active: boolean;
   onClick: () => void;
-  children: JSX.Element;
+  children: JSXElement;
 }
 
 export const DeviceSelectorButton: Component<DeviceSelectorButtonProps> = (

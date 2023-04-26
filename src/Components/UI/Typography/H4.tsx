@@ -1,9 +1,9 @@
 import { cn } from "@core/Utils/cn.js";
-import { Component, JSX } from "solid-js";
+import { Component, JSXElement } from "solid-js";
 
 export interface H4Props {
   class?: string;
-  children: JSX.Element;
+  children: JSXElement;
 }
 
 export const H4: Component<H4Props> = (props) => (

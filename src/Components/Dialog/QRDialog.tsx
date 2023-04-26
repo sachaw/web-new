@@ -9,7 +9,6 @@ import {
   DialogProps,
   DialogTitle,
 } from "@ui/Dialog.js";
-import { ClipboardIcon } from "lucide-solid";
 import { Protobuf, Types } from "@meshtastic/meshtasticjs";
 import { Label } from "@ui/Label.js";
 import { Component, For, createEffect, createSignal } from "solid-js";

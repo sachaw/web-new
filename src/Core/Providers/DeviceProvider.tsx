@@ -4,6 +4,7 @@ import {
   Accessor,
   Component,
   JSX,
+  JSXElement,
   Setter,
   createContext,
   createEffect,

@@ -1,17 +1,17 @@
-import { Component, Match, Show, Switch, createSignal } from "solid-js";
 import { Dashboard } from "@components/Layout/Dashboard/Index.jsx";
 import { DeviceSelector } from "@components/Layout/DeviceSelector/index.jsx";
-import { MessagesPage } from "./Pages/Messages.jsx";
-import "maplibre-gl/dist/maplibre-gl.css";
-import { useDevice } from "@core/Providers/DeviceProvider.jsx";
-import { ChannelsPage } from "./Pages/Channels/index.jsx";
-import { PeersPage } from "./Pages/Peers.jsx";
-import { MapGL } from "@components/Map/MapGL.jsx";
 import { Statusbar } from "@components/Layout/Statusbar/index.jsx";
 import { Topbar } from "@components/Layout/Topbar/index.jsx";
+import { MapGL } from "@components/Map/MapGL.jsx";
 import { MapWrapper } from "@components/Map/Warpper.jsx";
-import { ESRI_Imagery } from "@components/Map/sources/esri:imagery.js";
-import { ESRI_ImageryHybrid } from "@components/Map/sources/esri:imagery-hybrid.js";
+import { ESRI_Imagery } from "@components/Map/sources/esri-imagery.js";
+import { ESRI_ImageryHybrid } from "@components/Map/sources/esri-imagery_hybrid.js";
+import { useDevice } from "@core/Providers/DeviceProvider.jsx";
+import "maplibre-gl/dist/maplibre-gl.css";
+import { Component, Match, Show, Switch, createSignal } from "solid-js";
+import { ChannelsPage } from "./Pages/Channels/index.jsx";
+import { MessagesPage } from "./Pages/Messages.jsx";
+import { PeersPage } from "./Pages/Peers.jsx";
 
 export const App: Component = () => {
   const { activeDevice } = useDevice();

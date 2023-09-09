@@ -1,7 +1,5 @@
-import { fromByteArray } from "base64-js";
-import { QRCodeSVG } from "solid-qr-code";
+import { Protobuf, Types } from "@meshtastic/meshtasticjs";
 import { Checkbox } from "@ui/Checkbox.js";
-import { Input } from "@ui/Input.js";
 import {
   Dialog,
   DialogDescription,
@@ -9,9 +7,11 @@ import {
   DialogProps,
   DialogTitle,
 } from "@ui/Dialog.js";
-import { Protobuf, Types } from "@meshtastic/meshtasticjs";
+import { Input } from "@ui/Input.js";
 import { Label } from "@ui/Label.js";
+import { fromByteArray } from "base64-js";
 import { Component, For, createEffect, createSignal } from "solid-js";
+import { QRCodeSVG } from "solid-qr-code";
 
 export const QRDialog: Component<DialogProps> = (props) => {
   const [selectedChannels, setSelectedChannels] = createSignal<number[]>([0]);
@@ -41,7 +41,7 @@ export const QRDialog: Component<DialogProps> = (props) => {
   });
 
   return (
-    <Dialog isOpen={props.isOpen} onOpenChange={props.onOpenChange}>
+    <Dialog open={props.open} onOpenChange={props.onOpenChange}>
       <DialogTitle>Generate QR Code</DialogTitle>
       <DialogDescription>
         The current LoRa configuration will also be shared.
@@ -60,8 +60,8 @@ export const QRDialog: Component<DialogProps> = (props) => {
                       : `Channel: ${channel.index}`}
                   </Label>
                   <Checkbox
-                    isChecked={selectedChannels().includes(channel.index)}
-                    onCheckedChange={() => {
+                    checked={selectedChannels().includes(channel.index)}
+                    onChange={() => {
                       if (selectedChannels().includes(channel.index)) {
                         setSelectedChannels(
                           selectedChannels().filter((c) => c !== channel.index),

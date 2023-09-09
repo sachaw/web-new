@@ -1,8 +1,10 @@
+import { MessageScope, MessageStatus, MessageType } from "@core/DB/chat.js";
 import { Types } from "@meshtastic/meshtasticjs";
 import {
   Accessor,
   Component,
   JSX,
+  JSXElement,
   Setter,
   createContext,
   createEffect,
@@ -11,7 +13,6 @@ import {
 } from "solid-js";
 import { createStore } from "solid-js/store";
 import { useDevice } from "./DeviceProvider.jsx";
-import { MessageScope, MessageStatus, MessageType } from "@core/DB/chat.js";
 
 export interface ConnectionProviderProps {
   children: JSXElement;

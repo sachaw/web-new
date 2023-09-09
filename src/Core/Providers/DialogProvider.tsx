@@ -1,7 +1,13 @@
 import { DeviceNameDialog } from "@components/Dialog/DeviceNameDialog.jsx";
 import { NewDeviceDialog } from "@components/Dialog/NewDeviceDialog.jsx";
 import { QRDialog } from "@components/Dialog/QRDialog.jsx";
-import { JSX, createContext, createSignal, useContext } from "solid-js";
+import {
+  JSX,
+  JSXElement,
+  createContext,
+  createSignal,
+  useContext,
+} from "solid-js";
 
 export interface DialogProviderProps {
   children: JSXElement;
@@ -33,15 +39,15 @@ export const DialogProvider = (props: DialogProviderProps) => {
   return (
     <DialogContext.Provider value={{ dialog, setDialog }}>
       <NewDeviceDialog
-        isOpen={dialog("newDevice")}
+        open={dialog("newDevice")}
         onOpenChange={(open) => setDialog("newDevice", open)}
       />
       <QRDialog
-        isOpen={dialog("QRCode")}
+        open={dialog("QRCode")}
         onOpenChange={(open) => setDialog("QRCode", open)}
       />
       <DeviceNameDialog
-        isOpen={dialog("deviceName")}
+        open={dialog("deviceName")}
         onOpenChange={(open) => setDialog("deviceName", open)}
       />
       {props.children}

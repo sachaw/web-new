@@ -1,5 +1,5 @@
 import { cn } from "@core/Utils/cn.js";
-import { Component, JSXElement } from "solid-js";
+import { Component, JSX } from "solid-js";
 
 export const Input: Component<JSX.InputHTMLAttributes<HTMLInputElement>> = (
   props,

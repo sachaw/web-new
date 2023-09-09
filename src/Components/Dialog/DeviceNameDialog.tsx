@@ -1,4 +1,4 @@
-import { Input } from "@components/UI/Input.js";
+import { Button } from "@components/UI/Button.js";
 import {
   Dialog,
   DialogDescription,
@@ -6,9 +6,9 @@ import {
   DialogProps,
   DialogTitle,
 } from "@components/UI/Dialog.js";
-import { Button } from "@components/UI/Button.js";
-import { Protobuf } from "@meshtastic/meshtasticjs";
+import { Input } from "@components/UI/Input.js";
 import { Label } from "@components/UI/Label.js";
+import { Protobuf } from "@meshtastic/meshtasticjs";
 import { Component } from "solid-js";
 
 export interface User {
@@ -40,7 +40,7 @@ export const DeviceNameDialog: Component<DialogProps> = (props) => {
   // });
 
   return (
-    <Dialog isOpen={props.isOpen} onOpenChange={props.onOpenChange}>
+    <Dialog open={props.open} onOpenChange={props.onOpenChange}>
       <DialogTitle>Change Device Name</DialogTitle>
       <DialogDescription>
         The Device will restart once the config is saved.

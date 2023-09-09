@@ -1,28 +1,28 @@
-import {
-  PlusIcon,
-  HouseIcon,
-  UsersIcon,
-  StackIcon,
-  GearIcon,
-  ChatTeardropTextIcon,
-  TranslateIcon,
-  TerminalIcon,
-  SunIcon,
-  MoonIcon,
-  CircleNotchIcon,
-} from "solid-phosphor/regular";
 // import { Code } from "@components/UI/Typography/Code.js";
 // import { DeviceSelectorButton } from "./DeviceSelectorButton.js";
 import { Hashicon } from "@components/Hashicon.jsx";
-import { Separator } from "@ui/Separator.jsx";
-import { Component, For, Show, createSignal } from "solid-js";
 import { DeviceSelectorButton } from "@components/Layout/DeviceSelector/DeviceSelectorButton.jsx";
-import { Code } from "@ui/Typography/Code.jsx";
-import { useTheme } from "@core/Providers/ThemeProvider.jsx";
-import { useDialog } from "@core/Providers/DialogProvider.jsx";
-import { Page, useDevice } from "@core/Providers/DeviceProvider.jsx";
 import { useConnection } from "@core/Providers/ConnectionProvider.jsx";
+import { Page, useDevice } from "@core/Providers/DeviceProvider.jsx";
+import { useDialog } from "@core/Providers/DialogProvider.jsx";
+import { useTheme } from "@core/Providers/ThemeProvider.jsx";
+import { Separator } from "@ui/Separator.jsx";
+import { Code } from "@ui/Typography/Code.jsx";
+import { Component, For, Show, createSignal } from "solid-js";
 import type { PhosphorIcon } from "solid-phosphor";
+import {
+  ChatTeardropTextIcon,
+  CircleNotchIcon,
+  GearIcon,
+  HouseIcon,
+  MoonIcon,
+  PlusIcon,
+  StackIcon,
+  SunIcon,
+  TerminalIcon,
+  TranslateIcon,
+  UsersIcon,
+} from "solid-phosphor/regular";
 
 export const DeviceSelector: Component = () => {
   const [commandPaletteOpen, setCommandPaletteOpen] = createSignal(false);
@@ -84,6 +84,7 @@ export const DeviceSelector: Component = () => {
           ))}
           <Separator orientation="horizontal" />
           <button
+            type="button"
             onClick={() => setDialog("newDevice", true)}
             class="transition-all duration-300 hover:text-accent-500"
           >
@@ -106,6 +107,7 @@ export const DeviceSelector: Component = () => {
       </div>
       <div class="flex w-20 flex-col items-center space-y-5 bg-transparent px-5 pb-5">
         <button
+          type="button"
           class="transition-all hover:text-accent-500"
           onClick={() =>
             theme() === "dark" ? setTheme("light") : setTheme("dark")
@@ -116,12 +118,13 @@ export const DeviceSelector: Component = () => {
           </Show>
         </button>
         <button
+          type="button"
           class="transition-all hover:text-accent-500"
           onClick={() => setCommandPaletteOpen(true)}
         >
           <TerminalIcon />
         </button>
-        <button class="transition-all hover:text-accent-500">
+        <button type="button" class="transition-all hover:text-accent-500">
           <TranslateIcon />
         </button>
       </div>

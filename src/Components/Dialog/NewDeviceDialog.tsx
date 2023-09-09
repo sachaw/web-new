@@ -35,7 +35,7 @@ const tabs = [
 ];
 
 export const NewDeviceDialog: Component<DialogProps> = (props) => (
-  <Dialog isOpen={props.isOpen} onOpenChange={props.onOpenChange}>
+  <Dialog open={props.open} onOpenChange={props.onOpenChange}>
     <DialogTitle>Connect New Device</DialogTitle>
     <DialogDescription>Description</DialogDescription>
     <Tabs defaultValue="HTTP">
